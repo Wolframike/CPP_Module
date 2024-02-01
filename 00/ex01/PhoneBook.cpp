@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 00:38:08 by misargsy          #+#    #+#             */
-/*   Updated: 2024/01/31 03:08:50 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/02/01 22:18:37 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	PhoneBook::search(void)
 	unsigned int index;
 	std::cout << "Enter index: ";
 	std::cin >> index;
-	std::cin.clear();
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	if (index < this->contact_count)
 	{
