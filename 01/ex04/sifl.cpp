@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 18:27:06 by misargsy          #+#    #+#             */
-/*   Updated: 2024/02/01 18:32:51 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/04/24 18:43:23 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void Sifl::replace(std::string s1, std::string s2)
 
 	if (file.is_open())
 	{
-		while (std::getline(file, line))
-			content += line + "\n";
+		content = std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 		file.close();
 	}
 	else

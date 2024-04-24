@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 23:39:08 by misargsy          #+#    #+#             */
-/*   Updated: 2024/01/31 23:39:22 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/04/24 18:42:17 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ Weapon::Weapon(std::string type)
 
 Weapon::~Weapon(void) {}
 
-std::string	Weapon::getType(void)
+const std::string	&Weapon::getType(void)
 {
 	return (this->_type);
 }

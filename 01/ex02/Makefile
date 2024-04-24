@@ -6,15 +6,16 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/31 20:08:23 by misargsy          #+#    #+#              #
-#    Updated: 2024/01/31 23:28:37 by misargsy         ###   ########.fr        #
+#    Updated: 2024/04/24 18:44:47 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS		= -Wall -Wextra -Werror -std=c++98
-cc			= c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 
+CXX = c++
 
 NAME		= h-t-i-b
 SRCS		= main.cpp
+OBJS		= $(SRCS:.cpp=.o)
 
 GRAY		= \033[1;37m
 CYAN		= \033[1;36m
@@ -29,17 +30,22 @@ CONVERSION	= %-$(MAX).$(MAX)s\r
 
 all: $(NAME)
 
-$(NAME): $(SRCS)
+$(NAME): $(OBJS)
 	@printf "$(YELLOW)Compiling $@... $(CONVERSION)$(RESET)"
-	@$(cc) $(FLAGS) $(SRCS) -o $(NAME)
+	@$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 	@printf "$(GREEN)⪼ $(NAME): compilation done ⪻$(CONVERSION)$(RESET)\n"
 
+%.o: %.cpp
+	@printf "$(MAGENTA)Compiling $@... $(CONVERSION)$(RESET)"
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
+
 clean:
-	@printf "$(YELLOW)Removing $(NAME)... $(CONVERSION)$(RESET)"
-	@rm -f $(NAME)
-	@printf "$(RED)Removed $(NAME)$(CONVERSION)$(RESET)\n"
+	@$(RM) $(OBJS)
+	@printf "$(RED)Removed $(NAME)'s object files$(RESET)\n"
 
 fclean: clean
+	@$(RM) $(NAME)
+	@printf "$(RED)Removed $(NAME)$(RESET)\n"
 
 re: fclean all
 

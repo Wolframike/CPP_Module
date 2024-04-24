@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 23:42:12 by misargsy          #+#    #+#             */
-/*   Updated: 2024/01/31 23:49:00 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/04/24 18:41:11 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void HumanA::setWeapon(Weapon &weapon)
 	this->_weapon = weapon;
 }
 
-std::string HumanA::getName(void)
+const std::string& HumanA::getName(void)
 {
 	return (this->_name);
 }
 
-Weapon &HumanA::getWeapon(void)
+const Weapon& HumanA::getWeapon(void)
 {
 	return (this->_weapon);
 }
