@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:47:16 by misargsy          #+#    #+#             */
-/*   Updated: 2024/02/01 19:48:05 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:19:20 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main(void)
 {
 	Fixed		a;
 	Fixed const	b(10);
-	Fixed const	c(42.42f);
+	Fixed const	c(42.42F);
 	Fixed const	d(b);
 
 	a = Fixed(1234.4321f);
