@@ -6,11 +6,12 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:52:44 by misargsy          #+#    #+#             */
-/*   Updated: 2024/02/01 22:59:59 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:52:30 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int main(void)
 {
@@ -55,5 +56,11 @@ int main(void)
 	scav1.attack(clap1.getName());
 	clap1.takeDamage(scav1.getAttackDamage());
 	scav1.guardGate();
+
+	FragTrap frag1("Frag");
+
+	frag1.attack(scav1.getName());
+	scav1.takeDamage(frag1.getAttackDamage());
+	frag1.highFivesGuys();
 	return (0);
 }

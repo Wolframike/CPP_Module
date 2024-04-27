@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:44:45 by misargsy          #+#    #+#             */
-/*   Updated: 2024/02/01 23:24:07 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:48:25 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,25 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
 	this->_attackDamage = 20;
 	
 	std::cout << "ScavTrap " << name << " is born!" << std::endl;
+}
+
+ScavTrap::ScavTrap(const ScavTrap &copy) : ClapTrap(copy)
+{
+	std::cout << "ScavTrap " << _name << " has been cloned!" << std::endl;
+}
+
+ScavTrap&	ScavTrap::operator=(const ScavTrap &assign)
+{
+	if (this != &assign)
+	{
+		this->_name = assign._name;
+		this->_hitPoints = assign._hitPoints;
+		this->_energyPoints = assign._energyPoints;
+		this->_attackDamage = assign._attackDamage;
+	}
+	return (*this);
+
+	std::cout << "ScavTrap " << _name << " has been assigned!" << std::endl;
 }
 
 ScavTrap::~ScavTrap()
