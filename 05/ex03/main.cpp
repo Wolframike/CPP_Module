@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 21:16:31 by misargsy          #+#    #+#             */
-/*   Updated: 2024/04/30 04:08:37 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:59:57 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,21 @@ int main() {
 	
 	//Intern
 	Intern intern;
-	AForm *form4 = intern.makeForm(ROBOTOMY_REQUEST_FORM, "Anthony E-gas Monise");
-	std::cout << *form4 << std::endl;
 	try {
-		bureaucrat.signForm(*form4);
-		form4->execute(bureaucrat);
+		AForm *form4 = intern.makeForm(ROBOTOMY_REQUEST_FORM, "Anthony E-gas Monise");
+		std::cout << *form4 << std::endl;
+		
+		try {
+			bureaucrat.signForm(*form4);
+			form4->execute(bureaucrat);
+		} catch (std::exception &e) {
+			std::cerr << e.what() << std::endl;
+		}
+		
+		delete form4;
 	} catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;
 	}
-	delete form4;
 
 	return 0;
 }
