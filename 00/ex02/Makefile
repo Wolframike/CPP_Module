@@ -6,17 +6,16 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 22:41:18 by misargsy          #+#    #+#              #
-#    Updated: 2024/05/02 20:05:43 by misargsy         ###   ########.fr        #
+#    Updated: 2024/05/02 20:11:46 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 
 CXX = c++
 
-NAME		= m-a-p
-SRCS		=	Contact.cpp\
-				Phonebook.cpp\
-				main.cpp
+NAME		= Account
+SRCS		=	Account.cpp \
+				tests.cpp
 OBJS		= $(SRCS:.cpp=.o)
 
 GRAY		= \033[1;37m
