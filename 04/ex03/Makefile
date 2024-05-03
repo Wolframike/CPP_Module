@@ -6,20 +6,20 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 22:41:18 by misargsy          #+#    #+#              #
-#    Updated: 2024/05/04 02:34:47 by misargsy         ###   ########.fr        #
+#    Updated: 2024/05/04 04:40:39 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 CXX			= c++
 
-NAME		= Animal
+NAME		= Interface
 SRCS		=	main.cpp \
-				Animal.cpp \
-				Cat.cpp \
-				Dog.cpp \
-				Wrong.cpp \
-				Brain.cpp
+				AMateria.cpp \
+				Cure.cpp \
+				Ice.cpp \
+				MateriaSource.cpp \
+				Character.cpp
 OBJS		= $(SRCS:.cpp=.o)
 
 GRAY		= \033[1;37m
