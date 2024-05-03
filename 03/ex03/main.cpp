@@ -6,12 +6,11 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:52:44 by misargsy          #+#    #+#             */
-/*   Updated: 2024/04/27 19:52:30 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/04 01:38:38 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
 int main(void)
 {
@@ -62,5 +61,12 @@ int main(void)
 	frag1.attack(scav1.getName());
 	scav1.takeDamage(frag1.getAttackDamage());
 	frag1.highFivesGuys();
+
+	DiamondTrap diamond1("Diamond");
+
+	diamond1.attack(frag1.getName());
+	frag1.takeDamage(diamond1.getAttackDamage());
+	diamond1.whoAmI();
+	
 	return (0);
 }

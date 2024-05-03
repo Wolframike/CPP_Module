@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:43:02 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/02 23:07:33 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/04 01:22:35 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 class ScavTrap : virtual public ClapTrap
 {
 	public:
+		ScavTrap();
 		ScavTrap(std::string name);
 		ScavTrap(const ScavTrap &copy);
 		ScavTrap&		operator=(const ScavTrap &assign);

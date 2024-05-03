@@ -6,11 +6,21 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 23:03:38 by misargsy          #+#    #+#             */
-/*   Updated: 2024/04/27 19:51:13 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/04 01:16:58 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FragTrap.hpp"
+
+FragTrap::FragTrap() : ClapTrap()
+{
+	this->_name = "FragTrap";
+	this->_hitPoints = 100;
+	this->_energyPoints = 100;
+	this->_attackDamage = 30;
+
+	std::cout << "FragTrap " << this->_name << " joins the battle!" << std::endl;
+}
 
 FragTrap::FragTrap(std::string name) : ClapTrap(name)
 {

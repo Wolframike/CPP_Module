@@ -6,11 +6,21 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:36:48 by misargsy          #+#    #+#             */
-/*   Updated: 2024/02/01 22:57:23 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/04 01:14:44 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
+
+ClapTrap::ClapTrap()
+{
+	this->_name = "ClapTrap";
+	this->_hitPoints = 10;
+	this->_energyPoints = 10;
+	this->_attackDamage = 0;
+
+	std::cout << "ClapTrap " << this->_name << " joins the battle!" << std::endl;
+}
 
 ClapTrap::ClapTrap(std::string name)
 {

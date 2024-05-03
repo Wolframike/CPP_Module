@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:33:37 by misargsy          #+#    #+#             */
-/*   Updated: 2024/02/01 22:52:22 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/04 01:15:59 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ class ClapTrap
 		unsigned int	_attackDamage;
 
 	public:
+		ClapTrap();
 		ClapTrap(std::string name);
 		ClapTrap(const ClapTrap &copy);
 		ClapTrap&		operator=(const ClapTrap &assign);
