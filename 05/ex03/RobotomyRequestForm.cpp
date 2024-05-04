@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 03:27:52 by misargsy          #+#    #+#             */
-/*   Updated: 2024/04/30 04:14:06 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/04 09:30:23 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void RobotomyRequestForm::execute(Bureaucrat const &executor) const {
 		throw GradeTooLowException();
 	std::cout << "Surgery go brrrr" << std::endl;
 
-	srand(time(NULL));
-	if (rand() % 2)
+	std::srand(time(NULL));
+	if (std::rand() % 2)
 		std::cout << target_ << " has been robotomized" << std::endl;
 	else
 		std::cout << target_ << " robotomization failed" << std::endl;

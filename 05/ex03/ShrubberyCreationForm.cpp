@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 03:29:56 by misargsy          #+#    #+#             */
-/*   Updated: 2024/04/30 03:48:45 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/04 09:30:28 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
 			file << " ";
 		}
 		for (int j = 0; j < 2 * i + 1; ++j) {
-			char randomChar = rand() % 26 + 'a';
+			char randomChar = std::rand() % 26 + 'a';
 			file << randomChar;
 		}
 		file << std::endl;
