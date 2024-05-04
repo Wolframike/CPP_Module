@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 09:25:32 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/04 09:50:54 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/05 00:34:04 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void identify(Base &p) {
 }
 
 int main(void) {
-	//tests
-
 	Base *p = generate();
 	identify(p);
 	identify(*p);
