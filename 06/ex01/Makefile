@@ -6,15 +6,16 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/04 05:34:27 by misargsy          #+#    #+#              #
-#    Updated: 2024/05/04 05:34:30 by misargsy         ###   ########.fr        #
+#    Updated: 2024/05/04 08:48:50 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 
 CXX			= c++
 
-NAME		= 
-SRCS		=	
+NAME		= Serializer
+SRCS		=	main.cpp \
+				Serializer.cpp
 OBJS		= $(SRCS:.cpp=.o)
 
 GRAY		= \033[1;37m

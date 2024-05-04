@@ -6,15 +6,15 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/04 05:34:30 by misargsy          #+#    #+#              #
-#    Updated: 2024/05/04 05:34:32 by misargsy         ###   ########.fr        #
+#    Updated: 2024/05/04 09:50:11 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 
 CXX			= c++
 
-NAME		= 
-SRCS		=	
+NAME		= Identify
+SRCS		=	main.cpp
 OBJS		= $(SRCS:.cpp=.o)
 
 GRAY		= \033[1;37m
