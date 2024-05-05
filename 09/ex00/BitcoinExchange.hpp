@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 00:03:31 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/05 05:17:39 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:09:22 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,13 @@
 #include <sstream>
 #include <climits>
 
-class BitcoinExchange
-{
+#include "Date.hpp"
+
+class BitcoinExchange {
 	private:
-		typedef struct Date {
-			unsigned short day;
-			unsigned short month;
-			unsigned short year;
-		} Date;
 		static const std::string data_path_;
 
 		std::map<Date, double> rates_;
-
-		typedef std::map<Date, double>::iterator iterator;
 
 	public:
 		BitcoinExchange();
@@ -42,6 +36,7 @@ class BitcoinExchange
 
 		void setRates(void);
 		void printExchangeRate(const Date &d, double amount) const;
+		void processTextfile(const std::string &filename) const;
 };
 
 #endif

@@ -6,7 +6,7 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/29 21:03:37 by misargsy          #+#    #+#              #
-#    Updated: 2024/05/04 10:03:18 by misargsy         ###   ########.fr        #
+#    Updated: 2024/05/05 12:44:28 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CXX			= c++
 
 NAME		= btc
 SRCS		=	main.cpp \
-				BitcoinExchange.cpp
+				BitcoinExchange.cpp \
+				Date.cpp
 OBJS		= $(SRCS:.cpp=.o)
 
 GRAY		= \033[1;37m

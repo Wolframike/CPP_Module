@@ -6,16 +6,16 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/29 21:03:37 by misargsy          #+#    #+#              #
-#    Updated: 2024/05/05 05:42:18 by misargsy         ###   ########.fr        #
+#    Updated: 2024/05/05 17:12:23 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 
 CXX			= c++
 
-NAME		= PMergeMe
+NAME		= PmergeMe
 SRCS		=	main.cpp \
-				PMergeMe.cpp
+				PmergeMe.cpp
 OBJS		= $(SRCS:.cpp=.o)
 
 GRAY		= \033[1;37m
