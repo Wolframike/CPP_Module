@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 08:31:00 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/04 08:51:32 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:21:30 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ typedef struct Data {
 } Data;
 
 class Serializer {
-	public:
+	private:
 		Serializer();
 		Serializer(const Serializer &src);
 		~Serializer();
 		Serializer &operator=(const Serializer &src);
 
+	public:
 		static uintptr_t serialize(Data *ptr);
 		static Data *deserialize(uintptr_t raw);
 };

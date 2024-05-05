@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 07:49:21 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/04 07:51:29 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:00:22 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	
-	ScalarConverter sc(argv[1]);
-	sc.print();
+	ScalarConverter::convert(argv[1]);
 	return 0;
 }

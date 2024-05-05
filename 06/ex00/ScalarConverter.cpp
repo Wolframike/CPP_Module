@@ -6,28 +6,23 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 06:47:03 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/04 08:01:46 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:20:26 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 
-ScalarConverter::ScalarConverter() : str_(""), impossible_(0), type_(0), c_(0), i_(0), f_(0), d_(0) {}
+std::string ScalarConverter::str_;
+short ScalarConverter::impossible_;
+bool ScalarConverter::c_nonPrintable_;
+short ScalarConverter::type_;
+double ScalarConverter::tod_;
+char ScalarConverter::c_;
+int ScalarConverter::i_;
+float ScalarConverter::f_;
+double ScalarConverter::d_;
 
-ScalarConverter::ScalarConverter(const std::string &str) : str_(str), impossible_(0), c_nonPrintable_(false), type_(0), c_(0), i_(0), f_(0), d_(0) {
-	size_t start = str.find_first_not_of(" \t\n\v\f\r");
-	size_t end = str.find_last_not_of(" \t\n\v\f\r");
-
-	if (start == std::string::npos)
-		start = 0;
-	
-	if (end == std::string::npos)
-		end = str.length() - 1;
-	
-	str_ = str.substr(start, end - start + 1);
-
-	convert();
-}
+ScalarConverter::ScalarConverter() {}
 
 ScalarConverter::ScalarConverter(const ScalarConverter &src) {
 	*this = src;
@@ -48,7 +43,18 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &src) {
 
 ScalarConverter::~ScalarConverter() {}
 
-void ScalarConverter::convert(void) {
+void ScalarConverter::convert(const std::string &str) {
+	size_t start = str.find_first_not_of(" \t\n\v\f\r");
+	size_t end = str.find_last_not_of(" \t\n\v\f\r");
+
+	if (start == std::string::npos)
+		start = 0;
+	
+	if (end == std::string::npos)
+		end = str.length() - 1;
+	
+	str_ = str.substr(start, end - start + 1);
+
 	char *endptr;
 	tod_ = std::strtod(str_.c_str(), &endptr);
 	
@@ -57,6 +63,8 @@ void ScalarConverter::convert(void) {
 	toInt();
 	toFloat();
 	toDouble();
+
+	print();
 }
 
 bool ScalarConverter::isNumber() {
@@ -205,7 +213,7 @@ void ScalarConverter::toDouble() {
 		d_ = tod_;
 }
 
-void ScalarConverter::print() const {
+void ScalarConverter::print() {
 	std::cout << "char: ";
 	if (impossible_ & C)
 		std::cout << "impossible" << std::endl;

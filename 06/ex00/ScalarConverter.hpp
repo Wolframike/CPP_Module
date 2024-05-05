@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 05:35:58 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/04 07:54:08 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:20:49 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,39 +34,40 @@ typedef enum e_type : short{
 
 class ScalarConverter {
 	private:
-		std::string str_;
-		short impossible_;
-		bool c_nonPrintable_;
-		short type_;
-		double tod_;
+		static std::string str_;
+		static short impossible_;
+		static bool c_nonPrintable_;
+		static short type_;
+		static double tod_;
 
-		char c_;
-		int i_;
-		float f_;
-		double d_;
+		static char c_;
+		static int i_;
+		static float f_;
+		static double d_;
 
 		typedef struct {
 			size_t pos;
 			bool is;
 		} t_pos;
 
-		bool isNumber();
-		void setType();
+		static bool isNumber();
+		static void setType();
 
-		void toChar();
-		void toInt();
-		void toFloat();
-		void toDouble();
+		static void toChar();
+		static void toInt();
+		static void toFloat();
+		static void toDouble();
 
-	public:
+		static void print();
+
 		ScalarConverter();
 		ScalarConverter(const std::string &str);
 		ScalarConverter(const ScalarConverter &src);
 		ScalarConverter &operator=(const ScalarConverter &src);
 		~ScalarConverter();
 
-		void convert();
-		void print() const;
+	public:
+		static void convert(const std::string &str);
 };
 
 #endif
