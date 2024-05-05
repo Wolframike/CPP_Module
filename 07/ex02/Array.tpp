@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 19:51:39 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/04 05:01:06 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:43:16 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ Array<T>::~Array() {
 
 template <typename T>
 T& Array<T>::operator[](unsigned int i){
+	if (i >= size_)
+		throw std::out_of_range("Array: Index out of range");
+	return (array_[i]);
+}
+
+template <typename T>
+const T& Array<T>::operator[](unsigned int i) const {
 	if (i >= size_)
 		throw std::out_of_range("Array: Index out of range");
 	return (array_[i]);

@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 19:47:40 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/04 05:00:56 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:43:02 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Array {
 		~Array();
 
 		T& operator[](unsigned int i);
+		const T& operator[](unsigned int i) const;
 		unsigned int size() const;
 };
 

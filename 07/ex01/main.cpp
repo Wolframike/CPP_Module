@@ -6,16 +6,17 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 19:37:31 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/04 04:58:06 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:53:12 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "iter.hpp"
 
-template <typename T>
-void iter(T *array, size_t size, void (*func)(const T&)) {
-	for (size_t i = 0; i < size; i++)
+template <typename T, typename U>
+void iter(T *array, size_t size, U (*func)) {
+	for (size_t i = 0; i < size; i++) {
 		func(array[i]);
+	}
 }
 
 void printSquare(const int &i) {
