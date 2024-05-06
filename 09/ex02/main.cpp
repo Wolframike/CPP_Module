@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:01:44 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/05 16:36:28 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:13:03 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int main() {
 	PmergeMe p;
 
-	std::string str = "42 12 56 78 34 23 45 67 89 42 53 47 96 74 89 24";
+	std::string str = "1 6 5 2 4 3 9 7 8";
 	p.sort(str); 
 
 	return 0;

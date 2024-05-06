@@ -6,11 +6,11 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/29 21:03:37 by misargsy          #+#    #+#              #
-#    Updated: 2024/05/05 17:12:23 by misargsy         ###   ########.fr        #
+#    Updated: 2024/05/06 21:54:53 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -fsanitize=address
 CXX			= c++
 
 NAME		= PmergeMe

@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:10:23 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/05 17:34:54 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:57:38 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <cmath>
 
 class PmergeMe {
 	private:
@@ -26,10 +27,10 @@ class PmergeMe {
 
 		void fill(std::string &str);
 
-		size_t jacobsthalGenerator(size_t n);
+		size_t jacobsthal(size_t n);
 
 		void recursivePairSort(std::vector<std::pair<int, int> > &paired, size_t start, size_t end);
-		size_t binarySearch(std::vector<int> &vec, int value, size_t start, size_t end);
+		void binaryInsertion(std::vector<int> &vec, int value);
 		std::stringstream &sortVec();
 		std::stringstream &sortDeq();
 
