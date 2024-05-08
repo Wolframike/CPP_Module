@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 05:23:27 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/05 05:40:51 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/08 21:45:04 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void RPNCalculator::evaluate(const std::string &expr)
 
 	while (iss >> token) {
 		if (token.size() > 1) {
-			std::cerr << "Error: invalid token" << std::endl;
+			std::cout << "Error: invalid token" << std::endl;
 			return;
 		}
 		if (token == "+" || token == "-" || token == "*" || token == "/") {
@@ -62,7 +62,7 @@ void RPNCalculator::evaluate(const std::string &expr)
 					operands_.push(b / a);
 					break;
 				default:
-					std::cerr << "Error: invalid token" << std::endl;
+					std::cout << "Error: invalid token" << std::endl;
 					return;
 			}
 		}
@@ -71,13 +71,13 @@ void RPNCalculator::evaluate(const std::string &expr)
 				char *endptr;
 				operands_.push(std::strtod(token.c_str(), &endptr));
 			} else {
-				std::cerr << "Error: invalid token" << std::endl;
+				std::cout << "Error: invalid token" << std::endl;
 				return;
 			}
 		}
 	}
 	if (operands_.size() != 1)
-		std::cerr << "Error: too many operands" << std::endl;
+		std::cout << "Error: too many operands" << std::endl;
 	else
 		std::cout << operands_.top() << std::endl;
 }

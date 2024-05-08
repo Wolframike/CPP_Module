@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:54:07 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/06 19:18:57 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/08 21:54:56 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,128 +31,74 @@ PmergeMe::~PmergeMe() {}
 void PmergeMe::fill(std::string &str) {
 	std::stringstream ss(str);
 
-	int i;
+	long long i;
 	while (ss >> i) {
+		if (i > INT_MAX)
+			throw std::invalid_argument("Invalid argument");
 		vec_.push_back(i);
 		deq_.push_back(i);
 	}
 	if (!ss.eof())
 		throw std::invalid_argument("Invalid argument");
-}
-
-void PmergeMe::recursivePairSort(std::vector<std::pair<int, int> > &paired, size_t start, size_t end) {
-	if (start == end)
-		return;
-	size_t mid = (start + end) / 2;
-	recursivePairSort(paired, start, mid);
-	recursivePairSort(paired, mid + 1, end);
-	
-	std::vector<std::pair<int, int> > tmp;
-	size_t i = start;
-	size_t j = mid + 1;
-	while (i <= mid && j <= end) {
-		if (paired[i].first < paired[j].first)
-			tmp.push_back(paired[i++]);
-		else
-			tmp.push_back(paired[j++]);
-	}
-	while (i <= mid)
-		tmp.push_back(paired[i++]);
-	while (j <= end)
-		tmp.push_back(paired[j++]);
-	for (size_t i = start; i <= end; i++)
-		paired[i] = tmp[i - start];
+	if (vec_.size() == 0 || deq_.size() == 0)
+		throw std::invalid_argument("Empty argument");
 }
 
 size_t PmergeMe::jacobsthal(size_t n) {
+	n -= 1;
 	return (std::pow(2, n + 1) + std::pow(-1, n)) / 3;
-}
-
-void PmergeMe::binaryInsertion(std::vector<int> &vec, int value) {
-	size_t start = 0;
-	size_t end = vec.size();
-	size_t mid;
-	
-	while (start < end) {
-		mid = (start + end) / 2;
-		if (vec[mid] < value)
-			start = mid + 1;
-		else
-			end = mid;
-	}
-	vec.insert(vec.begin() + start, value);
 }
 
 std::stringstream &PmergeMe::sortVec() {
 	std::stringstream *ss = new std::stringstream;
 	std::clock_t start = std::clock();
-	const size_t floor = vec_.size() / 2;
 	
 	//Step 1: Pairwise comparison
-	std::vector<int> a;
-	std::vector<int> b;
-	
-	for (size_t i = 1; i <= vec_.size(); i++) {
-		if (i % 2 == 1)
-			a.push_back(vec_[i - 1]);
+	std::vector<std::pair<int, int> > m;
+	for (size_t i = 0; i < vec_.size(); i += 2) {
+		if (i + 1 < vec_.size())
+			m.push_back(std::make_pair(vec_[i], vec_[i + 1]));
 		else
-			b.push_back(vec_[i - 1]);
+			m.push_back(std::make_pair(vec_[i], -1));
+	}
+	for (size_t i = 0; i < m.size(); i++) {
+		if (m[i].first < m[i].second)
+			std::swap(m[i].first, m[i].second);
 	}
 	
-	for (size_t i = 1; i <= floor; i++)
-		if (a[i - 1] < b[i - 1])
-			std::swap(a[i - 1], b[i - 1]);
-			
-	//Step 2: Recursion and Renaming
-	std::vector<std::pair<int, int> > m;
-	for (size_t i = 1; i <= floor; i++)
-		m.push_back(std::make_pair(a[i - 1], b[i - 1]));
-	
+	//Step 2: Recursion
 	recursivePairSort(m, 0, m.size() - 1);
-	for (size_t i = 1; i <= floor; i++)
-		b[i - 1] = m[i - 1].second;
 	
 	//Step 3: Insertion
 	std::vector<int> d;
-	d.push_back(b[1 - 1]);
-	for (size_t i = 1; i <= floor; i++)
-		d.push_back(a[i - 1]);
-	size_t k = 2;
-	size_t min;
-	size_t u;
-	std::vector<int> tmp;
-	
-	while (jacobsthal(k - 1) < floor + 1) {
-		min = std::min(jacobsthal(k), floor + 1);
-		u = jacobsthal(k - 1) + min;
-		for (size_t i = min; i >= jacobsthal(k - 1) + 1; i--) {
-			puts("1");
-			tmp.clear();
-			tmp.resize(u - 1);
-			std::cout << d.size() << std::endl;
-			for (size_t j = 1; j <= u - 1; j++) {
-				std::cout << "j: " << j << std::endl;
-				tmp[j - 1] = d[j - 1];
-			}
-			puts("2");
-			binaryInsertion(tmp, b[i - 1]);
-			puts("3");
-			for (size_t j = u; j <= (2 * min + jacobsthal(k - 1) - i); j++)
-				tmp.push_back(d[j - 1]);
-			puts("4");
-			d.clear();
-			for (size_t j = 0; j < tmp.size(); j++)
-				d.push_back(tmp[j]);
-			while (d[u - 1] != a[i - 1 - 1])
-				u--;
-			puts("5");
+	d.push_back(m[0].second);
+	d.push_back(m[0].first);
+	size_t insertedFromFirst = 1;
+	size_t insertedFromSecond = 1;
+	size_t inserting;
+	for (size_t i = 1; insertedFromSecond < m.size(); i++) {
+		inserting = jacobsthal(i) * 2;
+		for (size_t j = 1; (insertedFromFirst < m.size()) && (j <= inserting); j++) {
+			d.push_back(m[insertedFromFirst].first);
+			insertedFromFirst++;
 		}
-		k++;
+		for (size_t j = 1; (insertedFromSecond < m.size()) && (j <= inserting); j++) {
+			binaryInsertion(d, m[insertedFromSecond].second);
+			insertedFromSecond++;
+		}
 	}
-
-	///////////////////////////////////////////////////
+	
+	//Step 4: Finishing up
+	if (vec_.size() % 2 == 1)
+		d.erase(d.begin());
+	vec_ = d;
+	
 	std::clock_t end = std::clock();
-	*ss << "Time: " << static_cast<double>(end - start) / CLOCKS_PER_SEC << "s";
+
+	*ss	<< "Time to process a range of"
+		<< std::setw(5) << vec_.size()
+		<< " elements with std::vector : "
+		<< std::setw(5) << static_cast<double>(end - start) << " us";
 
 	return *ss;
 }
@@ -160,26 +106,76 @@ std::stringstream &PmergeMe::sortVec() {
 std::stringstream &PmergeMe::sortDeq() {
 	std::stringstream *ss = new std::stringstream;
 	std::clock_t start = std::clock();
-
+	
+	//Step 1: Pairwise comparison
+	std::deque<std::pair<int, int> > m;
+	for (size_t i = 0; i < deq_.size(); i += 2) {
+		if (i + 1 < deq_.size())
+			m.push_back(std::make_pair(deq_[i], deq_[i + 1]));
+		else
+			m.push_back(std::make_pair(deq_[i], -1));
+	}
+	for (size_t i = 0; i < m.size(); i++) {
+		if (m[i].first < m[i].second)
+			std::swap(m[i].first, m[i].second);
+	}
+	
+	//Step 2: Recursion
+	recursivePairSort(m, 0, m.size() - 1);
+	
+	//Step 3: Insertion
+	std::deque<int> d;
+	d.push_back(m[0].second);
+	d.push_back(m[0].first);
+	size_t insertedFromFirst = 1;
+	size_t insertedFromSecond = 1;
+	size_t inserting;
+	for (size_t i = 1; insertedFromSecond < m.size(); i++) {
+		inserting = jacobsthal(i) * 2;
+		for (size_t j = 1; (insertedFromFirst < m.size()) && (j <= inserting); j++) {
+			d.push_back(m[insertedFromFirst].first);
+			insertedFromFirst++;
+		}
+		for (size_t j = 1; (insertedFromSecond < m.size()) && (j <= inserting); j++) {
+			binaryInsertion(d, m[insertedFromSecond].second);
+			insertedFromSecond++;
+		}
+	}
+	
+	//Step 4: Finishing up
+	if (deq_.size() % 2 == 1)
+		d.erase(d.begin());
+	deq_ = d;
+	
 	std::clock_t end = std::clock();
-	*ss << "Time: " << static_cast<double>(end - start) / CLOCKS_PER_SEC << "s";
+	
+	*ss	<< "Time to process a range of"
+		<< std::setw(5) << vec_.size()
+		<< " elements with std::deque  : "
+		<< std::setw(5) << static_cast<double>(end - start) << " us";
 
 	return *ss;
 }
 
 void PmergeMe::sort(std::string &str) {
 	fill(str);
-	std::stringstream &ssVec = sortVec();
-	std::stringstream &ssDeq = sortDeq();
 
-	std::cout << "Vector: " << ssVec.str() << std::endl;
-
-	//vector result
+	std::cout << "Before:  ";
 	for (size_t i = 0; i < vec_.size(); i++)
 		std::cout << vec_[i] << " ";
-
+	std::cout << std::endl;
+	
+	std::stringstream &ssVec = sortVec();
+	std::stringstream &ssDeq = sortDeq();
+	
+	std::cout << "After:   ";
+	for (size_t i = 0; i < vec_.size(); i++)
+		std::cout << vec_[i] << " ";
 	std::cout << std::endl;
 
+	std::cout << ssVec.str() << std::endl;
+	std::cout << ssDeq.str() << std::endl;
+	
 	delete &ssVec;
 	delete &ssDeq;
 }

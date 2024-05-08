@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 01:41:34 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/08 18:56:45 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/08 21:45:04 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void BitcoinExchange::setRates(void)
 			std::cout << "Error: too large a number." << std::endl;
 			continue;
 		}
-		
 		rates_[date] = rate;
 	}
 	file.close();
@@ -88,7 +87,7 @@ void BitcoinExchange::printExchangeRate(const Date &d, const double amount) cons
 			std::cout << "Error: no data available before this date." << std::endl;
 			return;
 		}
-		low--;		
+		low--;
 	}
 	std::cout << d << " => " << amount << " = " << amount * low->second << std::endl;
 }
@@ -98,7 +97,7 @@ void BitcoinExchange::processTextfile(const std::string &filename) const {
 
 	if (!file.is_open())
 	{
-		std::cerr << "Error: could not open file." << std::endl;
+		std::cout << "Error: could not open file." << std::endl;
 		return;
 	}
 
