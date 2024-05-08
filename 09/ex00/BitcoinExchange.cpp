@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 01:41:34 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/05 14:07:37 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:56:45 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,45 @@ void BitcoinExchange::setRates(void)
 	}
 
 	std::string line;
-	std::getline(file, line); // skip header
+	std::getline(file, line);
+	if (line != "date,exchange_rate") {
+		throw std::invalid_argument("Error: bad header in database, only 'date,exchange_rate' is allowed.");
+		return;
+	}
+	
+	double rate;
+	Date date;
+	int i;
+	double y, m, d;
 	while (std::getline(file, line))
 	{
-		std::string date;
-		double rate;
-		Date d;
-		std::sscanf(line.c_str(), "%hu-%hu-%hu,%lf", &d.year, &d.month, &d.day, &rate);
-		if (!d.isValid())
-			throw std::invalid_argument("Error: bad date in database.");
-		rates_[d] = rate;
+		i = std::sscanf(line.c_str(), "%lf-%lf-%lf,%lf", &y, &m, &d, &rate);
+		if (i != 4) {
+			std::cout << "Error: bad line" << std::endl;
+			continue;
+		}
+		if (!((0 <= y && y <= USHRT_MAX) && (0 <= m && m <= USHRT_MAX) && (0 <= d && d <= USHRT_MAX))) {
+			std::cout << "Error: bad date" << " => " << date << std::endl;
+			continue;
+		}
+		date.setYear(y);
+		date.setMonth(m);
+		date.setDay(d);
+		
+		if (!date.isValid()) {
+			std::cout << "Error: bad date" << " => " << date << std::endl;
+			continue;
+		}
+		if (rate < 0) {
+			std::cout << "Error: not a positive number." << std::endl;
+			continue;
+		}
+		if (rate > INT_MAX) {
+			std::cout << "Error: too large a number." << std::endl;
+			continue;
+		}
+		
+		rates_[date] = rate;
 	}
 	file.close();
 }
@@ -74,21 +103,34 @@ void BitcoinExchange::processTextfile(const std::string &filename) const {
 	}
 
 	std::string line;
-	std::string date;
-	double amount;
-	Date d;
-	int i;
 	
-	std::getline(file, line); // skip header
+	std::getline(file, line);
+	if (line != "date | value") {
+		std::cout << "Error: bad header in input, only 'date | value' is allowed." << std::endl;
+		return;
+	}
+	
+	double amount;
+	Date date;
+	int i;
+	double y, m, d;
 	while (std::getline(file, line))
 	{
-		i = std::sscanf(line.c_str(), "%hu-%hu-%hu | %lf", &d.year, &d.month, &d.day, &amount);
+		i = std::sscanf(line.c_str(), "%lf-%lf-%lf | %lf", &y, &m, &d, &amount);
 		if (i != 4) {
-			if (!d.isValid()) {
-				std::cout << "Error: bad input" << " => " << d << std::endl;
-				continue;
-			}
-			std::cout << "Error: unknown error." << std::endl;
+			std::cout << "Error: bad line" << std::endl;
+			continue;
+		}
+		if (!((0 <= y && y <= USHRT_MAX) && (0 <= m && m <= USHRT_MAX) && (0 <= d && d <= USHRT_MAX))) {
+			std::cout << "Error: bad date" << " => " << date << std::endl;
+			continue;
+		}
+		date.setYear(y);
+		date.setMonth(m);
+		date.setDay(d);
+		
+		if (!date.isValid()) {
+			std::cout << "Error: bad date" << " => " << date << std::endl;
 			continue;
 		}
 		if (amount < 0) {
@@ -99,7 +141,7 @@ void BitcoinExchange::processTextfile(const std::string &filename) const {
 			std::cout << "Error: too large a number." << std::endl;
 			continue;
 		}
-		printExchangeRate(d, amount);
+		printExchangeRate(date, amount);
 	}
 
 	file.close();

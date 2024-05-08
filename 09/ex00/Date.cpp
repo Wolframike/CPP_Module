@@ -6,54 +6,78 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:42:03 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/05 13:58:03 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:50:24 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Date.hpp"
 
-Date::Date() : year(0), month(0), day(0) {}
+Date::Date() : year_(0), month_(0), day_(0) {}
 
-Date::Date(unsigned short year, unsigned short month, unsigned short day) : year(year), month(month), day(day) {}
+Date::Date(unsigned short year_, unsigned short month_, unsigned short day_) : year_(year_), month_(month_), day_(day_) {}
 
-Date::Date(const Date &copy) : year(copy.year), month(copy.month), day(copy.day) {}
+Date::Date(const Date &copy) : year_(copy.year_), month_(copy.month_), day_(copy.day_) {}
 
 Date &Date::operator=(const Date &copy) {
 	if (this != &copy)
 	{
-		year = copy.year;
-		month = copy.month;
-		day = copy.day;
+		year_ = copy.year_;
+		month_ = copy.month_;
+		day_ = copy.day_;
 	}
 	return *this;
 }
 
 Date::~Date() {}
 
+unsigned short Date::getYear() const {
+	return year_;
+}
+
+unsigned short Date::getMonth() const {
+	return month_;
+}
+
+unsigned short Date::getDay() const {
+	return day_;
+}
+
+void Date::setYear(unsigned short year) {
+	year_ = year;
+}
+
+void Date::setMonth(unsigned short month) {
+	month_ = month;
+}
+
+void Date::setDay(unsigned short day) {
+	day_ = day;
+}
+
 bool Date::operator==(const Date& other) const {
-	return year == other.year && month == other.month && day == other.day;
+	return year_ == other.year_ && month_ == other.month_ && day_ == other.day_;
 }
 
 bool Date::operator<(const Date& other) const {
-	if (year < other.year)
+	if (year_ < other.year_)
 		return true;
-	if (year == other.year) {
-		if (month < other.month)
+	if (year_ == other.year_) {
+		if (month_ < other.month_)
 			return true;
-		if (month == other.month)
-			return day < other.day;
+		if (month_ == other.month_)
+			return day_ < other.day_;
 	}
 	return false;
 }
 
 bool Date::operator>(const Date& other) const {
-	if (year > other.year)
+	if (year_ > other.year_)
 		return true;
-	if (year == other.year) {
-		if (month > other.month)
+	if (year_ == other.year_) {
+		if (month_ > other.month_)
 			return true;
-		if (month == other.month)
-			return day > other.day;
+		if (month_ == other.month_)
+			return day_ > other.day_;
 	}
 	return false;
 }
@@ -71,23 +95,23 @@ bool Date::operator!=(const Date& other) const {
 }
 
 bool Date::isValid() const {
-	if (month < 1 || month > 12 || day < 1 || day > 31)
+	if (month_ < 1 || month_ > 12 || day_ < 1 || day_ > 31)
 		return false;
-	if (month == 2) {
-		if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
-			return day <= 29;
-		return day <= 28;
+	if (month_ == 2) {
+		if (year_ % 4 == 0 && (year_ % 100 != 0 || year_ % 400 == 0))
+			return day_ <= 29;
+		return day_ <= 28;
 	}
-	if (month == 4 || month == 6 || month == 9 || month == 11)
-		return day <= 30;
+	if (month_ == 4 || month_ == 6 || month_ == 9 || month_ == 11)
+		return day_ <= 30;
 	return true;
 }
 
 std::ostream &operator<<(std::ostream &out, const Date &d) {
 	out << std::setfill('0')
-		<< std::setw(4) << d.year << "-"
-		<< std::setw(2) << d.month << "-"
-		<< std::setw(2) << d.day;
+		<< std::setw(4) << d.getYear() << "-"
+		<< std::setw(2) << d.getMonth() << "-"
+		<< std::setw(2) << d.getDay();
 	return out;
 }
 
@@ -96,19 +120,19 @@ double Date::diff(const Date &a, const Date &b) {
 		throw std::invalid_argument("Error: bad date");
 	double diff = 0;
 	
-	if (a.day < b.day)
-		diff += b.day - a.day;
+	if (a.day_ < b.day_)
+		diff += b.day_ - a.day_;
 	else
-		diff += a.day - b.day;
+		diff += a.day_ - b.day_;
 
-	if (a.month < b.month)
-		diff += (b.month - a.month) * 30;
+	if (a.month_ < b.month_)
+		diff += (b.month_ - a.month_) * 30;
 	else
-		diff += (a.month - b.month) * 30;
+		diff += (a.month_ - b.month_) * 30;
 
-	if (a.year < b.year)
-		diff += (b.year - a.year) * 365;
+	if (a.year_ < b.year_)
+		diff += (b.year_ - a.year_) * 365;
 	else
-		diff += (a.year - b.year) * 365;
+		diff += (a.year_ - b.year_) * 365;
 	return diff;
 }
