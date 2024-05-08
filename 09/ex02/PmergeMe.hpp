@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:10:23 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/08 21:31:55 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/09 00:30:23 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ class PmergeMe {
 		template <typename T>
 		void binaryInsertion(T &vec, int value);
 		
-		std::stringstream &sortVec();
-		std::stringstream &sortDeq();
+		enum Container {
+			VECTOR,
+			DEQUE
+		};
+		template <typename ContainerType, typename PairType>
+		std::stringstream &sortContainer(Container type);
 
 		
 	public:
