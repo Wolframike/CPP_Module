@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:54:07 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/09 00:30:39 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/14 21:19:21 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void PmergeMe::sort(std::string &str) {
 		std::cout << vec_[i] << " ";
 	std::cout << std::endl;
 	
-	std::stringstream &ssVec = sortContainer<std::vector<int>, std::vector<std::pair<int, int> > >(VECTOR);
-	std::stringstream &ssDeq = sortContainer<std::deque<int>, std::deque<std::pair<int, int> > >(DEQUE);
+	std::stringstream &ssVec = sortContainer<std::vector<int> >(VECTOR);
+	std::stringstream &ssDeq = sortContainer<std::deque<int> >(DEQUE);
 	
 	std::cout << "After:   ";
 	for (size_t i = 0; i < vec_.size(); i++)

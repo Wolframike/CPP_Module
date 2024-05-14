@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:10:23 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/09 00:30:23 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/14 21:17:50 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ class PmergeMe {
 
 		size_t jacobsthal(size_t n);
 
-		template <typename T>
-		void recursivePairSort(T &paired, size_t start, size_t end);
-		template <typename T>
-		void binaryInsertion(T &vec, int value);
+		template <typename ContainerType>
+		void binaryInsertion(ContainerType &vec, int value);
 		
 		enum Container {
 			VECTOR,
 			DEQUE
 		};
 		template <typename ContainerType, typename PairType>
-		std::stringstream &sortContainer(Container type);
+		ContainerType *mergeInsertionSort(ContainerType container);
 
+		template <typename ContainerType>
+		std::stringstream &sortContainer(Container type);
 		
 	public:
 		PmergeMe();
