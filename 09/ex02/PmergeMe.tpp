@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 20:52:15 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/14 21:18:03 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/15 00:46:42 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ ContainerType *PmergeMe::mergeInsertionSort(ContainerType container) {
 	}
 
 	// Step 4: Cleanup
-	if (sorted->back() == -1)
-		sorted->pop_back();
+	// if (sorted->back() == -1)
+	// 	sorted->pop_back();
 
 	delete sortedFirst;
 	return sorted;
@@ -97,7 +97,7 @@ std::stringstream &PmergeMe::sortContainer(Container type) {
 	if (type == VECTOR) {
 		std::vector<int> *sorted = mergeInsertionSort<std::vector<int>, std::vector<std::pair<int, int> > >(vec_);
 		for (size_t i = 0; i < vec_.size(); i++)
-			deq_[i] = (*sorted)[i];
+			vec_[i] = (*sorted)[i];
 		delete sorted;
 	} else {
 		std::deque<int> *sorted = mergeInsertionSort<std::deque<int>, std::deque<std::pair<int, int> > >(deq_);

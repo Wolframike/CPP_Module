@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:54:07 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/14 21:19:21 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/15 00:47:03 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,27 @@ size_t PmergeMe::jacobsthal(size_t n) {
 }
 
 void PmergeMe::sort(std::string &str) {
+	std::stringstream ss;
 	fill(str);
 
-	std::cout << "Before:  ";
+	ss << "Before:  ";
 	for (size_t i = 0; i < vec_.size(); i++)
-		std::cout << vec_[i] << " ";
-	std::cout << std::endl;
+		ss << vec_[i] << " ";
+	ss << std::endl;
 	
 	std::stringstream &ssVec = sortContainer<std::vector<int> >(VECTOR);
 	std::stringstream &ssDeq = sortContainer<std::deque<int> >(DEQUE);
 	
-	std::cout << "After:   ";
+	ss << "After:   ";
 	for (size_t i = 0; i < vec_.size(); i++)
-		std::cout << deq_[i] << " ";
-	std::cout << std::endl;
+		ss << deq_[i] << " ";
+	ss << std::endl;
 
-	std::cout << ssVec.str() << std::endl;
-	std::cout << ssDeq.str() << std::endl;
+	ss << ssVec.str() << std::endl;
+	ss << ssDeq.str() << std::endl;
 	
 	delete &ssVec;
 	delete &ssDeq;
+
+	std::cout << ss.str();
 }
