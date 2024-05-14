@@ -48,7 +48,7 @@ ContainerType *PmergeMe::mergeInsertionSort(ContainerType container) {
 		if (paired[i].first < paired[i].second)
 			std::swap(paired[i].first, paired[i].second);
 
-	// Step 2: Step 2: Recursion
+	// Step 2: Recursion
 	ContainerType first;
 	for (size_t i = 0; i < paired.size(); i++)
 		first.push_back(paired[i].first);
