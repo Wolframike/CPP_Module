@@ -6,12 +6,12 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 20:52:15 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/15 00:46:42 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/15 06:20:24 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 template <typename ContainerType>
-void PmergeMe::binaryInsertion(ContainerType &container, int value) {
+void PmergeMe::binaryInsertion(ContainerType *container, int value) {
 	size_t start = 0;
 	size_t end = container->size();
 	size_t mid;
@@ -66,8 +66,7 @@ ContainerType *PmergeMe::mergeInsertionSort(ContainerType container) {
 
 	// Step 3: Insertion
 	ContainerType *sorted = new ContainerType;
-	if (sortedPair[0].second != -1)
-		sorted->push_back(sortedPair[0].second);
+	sorted->push_back(sortedPair[0].second);
 	sorted->push_back(sortedPair[0].first);
 	size_t insertedFromFirst = 1;
 	size_t insertedFromSecond = 1;
@@ -82,16 +81,16 @@ ContainerType *PmergeMe::mergeInsertionSort(ContainerType container) {
 	}
 
 	// Step 4: Cleanup
-	// if (sorted->back() == -1)
-	// 	sorted->pop_back();
+	if (sorted->front() == -1)
+		sorted->erase(sorted->begin());
 
 	delete sortedFirst;
 	return sorted;
 }
 
 template <typename ContainerType>
-std::stringstream &PmergeMe::sortContainer(Container type) {
-	std::stringstream *ss = new std::stringstream;
+std::stringstream PmergeMe::sortContainer(Container type) {
+	std::stringstream ss;
 	const std::clock_t start = std::clock();
 
 	if (type == VECTOR) {
@@ -102,24 +101,24 @@ std::stringstream &PmergeMe::sortContainer(Container type) {
 	} else {
 		std::deque<int> *sorted = mergeInsertionSort<std::deque<int>, std::deque<std::pair<int, int> > >(deq_);
 		for (size_t i = 0; i < deq_.size(); i++)
-			vec_[i] = (*sorted)[i];
+			deq_[i] = (*sorted)[i];
 		delete sorted;
 	}
 	
 	const std::clock_t end = std::clock();
 
-	*ss	<< "Time to process a range of"
+	ss	<< "Time to process a range of"
 		<< std::setw(5) << (type == VECTOR ? vec_.size() : deq_.size())
 		<< " elements with ";
 	if (type == VECTOR)
-		*ss << "std::vector ";
+		ss << "std::vector ";
 	else
-		*ss << "std::deque  ";
-	*ss
+		ss << "std::deque  ";
+	ss
 		<< " : "
 		<< std::setw(5) << static_cast<double>(end - start) << " us";
 	
-	return *ss;
+	return ss;
 }
 
 #include "PmergeMe.hpp"

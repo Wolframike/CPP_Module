@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:10:23 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/14 21:17:50 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/15 06:17:48 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <vector>
 #include <deque>
+#include <set>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -31,7 +32,7 @@ class PmergeMe {
 		size_t jacobsthal(size_t n);
 
 		template <typename ContainerType>
-		void binaryInsertion(ContainerType &vec, int value);
+		void binaryInsertion(ContainerType *container, int value);
 		
 		enum Container {
 			VECTOR,
@@ -41,7 +42,7 @@ class PmergeMe {
 		ContainerType *mergeInsertionSort(ContainerType container);
 
 		template <typename ContainerType>
-		std::stringstream &sortContainer(Container type);
+		std::stringstream sortContainer(Container type);
 		
 	public:
 		PmergeMe();

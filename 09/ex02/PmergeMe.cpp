@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:54:07 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/15 00:47:03 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/15 06:19:00 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,12 @@ void PmergeMe::fill(std::string &str) {
 	}
 	if (!ss.eof())
 		throw std::invalid_argument("Invalid argument");
-	if (vec_.size() == 0 || deq_.size() == 0)
+	if (vec_.size() == 0)
 		throw std::invalid_argument("Empty argument");
+
+	std::set<int> set(vec_.begin(), vec_.end());
+	if (set.size() != vec_.size())
+		throw std::invalid_argument("Duplicate argument");
 }
 
 size_t PmergeMe::jacobsthal(size_t n) {
@@ -58,8 +62,8 @@ void PmergeMe::sort(std::string &str) {
 		ss << vec_[i] << " ";
 	ss << std::endl;
 	
-	std::stringstream &ssVec = sortContainer<std::vector<int> >(VECTOR);
-	std::stringstream &ssDeq = sortContainer<std::deque<int> >(DEQUE);
+	std::stringstream ssVec = sortContainer<std::vector<int> >(VECTOR);
+	std::stringstream ssDeq = sortContainer<std::deque<int> >(DEQUE);
 	
 	ss << "After:   ";
 	for (size_t i = 0; i < vec_.size(); i++)
@@ -68,9 +72,6 @@ void PmergeMe::sort(std::string &str) {
 
 	ss << ssVec.str() << std::endl;
 	ss << ssDeq.str() << std::endl;
-	
-	delete &ssVec;
-	delete &ssDeq;
 
 	std::cout << ss.str();
 }

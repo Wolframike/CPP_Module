@@ -6,12 +6,17 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:01:44 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/14 21:21:12 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/15 06:27:20 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
+/*
+
+./PmergeMe `jot -r 3000 1 100000 | awk '!seen[$0]++' | tr '\n' ' '`
+
+*/
 int main(int argc, char **argv) {
 	if (argc == 1)
 		return 0;
