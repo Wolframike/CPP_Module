@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/04 04:05:07 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/04 04:43:04 by misargsy         ###   ########.fr       */
+/*   Created: 2024/09/22 20:49:20 by misargsy          #+#    #+#             */
+/*   Updated: 2024/09/22 20:51:43 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@ int main() {
 	
 	ICharacter* me = new Character("me");
 	
-	AMateria* tmp;
-	tmp = src->createMateria("ice");
-	me->equip(tmp);
-	tmp = src->createMateria("cure");
-	me->equip(tmp);
+	me->equip(src->createMateria("ice"));
+	me->equip(src->createMateria("cure"));
 
 	ICharacter* bob = new Character("bob");
 	
@@ -34,15 +31,15 @@ int main() {
 	me->use(1, *bob);
 
 	//overflow materia slot
-	tmp = src->createMateria("ice");
-	me->equip(tmp);
-	tmp = src->createMateria("cure");
-	me->equip(tmp);
+	me->equip(src->createMateria("ice"));
+	me->equip(src->createMateria("cure"));
 
+	
+	AMateria *tmp = src->createMateria("ice");
 	try {
-		tmp = src->createMateria("ice");
 		me->equip(tmp);
 	} catch (std::exception &e) {
+		delete tmp;
 		std::cout << e.what() << std::endl;
 	}
 
