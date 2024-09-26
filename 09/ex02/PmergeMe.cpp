@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:54:07 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/15 06:19:00 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/09/27 04:51:56 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,43 +35,223 @@ void PmergeMe::fill(std::string &str) {
 	while (ss >> i) {
 		if (i > INT_MAX)
 			throw std::invalid_argument("Invalid argument");
-		vec_.push_back(i);
-		deq_.push_back(i);
+		vec_.push_back(ctint(i));
+		deq_.push_back(ctint(i));
 	}
 	if (!ss.eof())
 		throw std::invalid_argument("Invalid argument");
 	if (vec_.size() == 0)
 		throw std::invalid_argument("Empty argument");
 
-	std::set<int> set(vec_.begin(), vec_.end());
+	std::set<int> set;
+	for (std::vector<ctint>::iterator it = vec_.begin(); it != vec_.end(); it++)
+		set.insert(it->val());
 	if (set.size() != vec_.size())
 		throw std::invalid_argument("Duplicate argument");
 }
 
 size_t PmergeMe::jacobsthal(size_t n) {
-	n -= 1;
 	return (std::pow(2, n + 1) + std::pow(-1, n)) / 3;
 }
 
-void PmergeMe::sort(std::string &str) {
-	std::stringstream ss;
+
+void PmergeMe::sort(std::string str) {
 	fill(str);
+	size_t veccount, deqcount;
+	std::clock_t start, end, vect, deqt;
 
-	ss << "Before:  ";
-	for (size_t i = 0; i < vec_.size(); i++)
-		ss << vec_[i] << " ";
-	ss << std::endl;
+	std::cout << "Count: " << vec_.size() << std::endl;
+	std::cout << "Before: " << std::endl;
+	for (std::vector<ctint>::iterator it = vec_.begin(); it != vec_.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl << "========================" << std::endl;
 	
-	std::stringstream ssVec = sortContainer<std::vector<int> >(VECTOR);
-	std::stringstream ssDeq = sortContainer<std::deque<int> >(DEQUE);
+	ctint::resetComparisons();
+	start = std::clock();
+	std::vector<std::pair<ctint, size_t> > vecsorted = sortVector(vec_);
+	end = std::clock();
+	veccount = ctint::getComparisons();
+	vect = end - start;
+
+	ctint::resetComparisons();
+	start = std::clock();
+	std::deque<std::pair<ctint, size_t> > deqsorted = sortDeque(deq_);
+	end = std::clock();
+	deqcount = ctint::getComparisons();
+	deqt = end - start;
 	
-	ss << "After:   ";
-	for (size_t i = 0; i < vec_.size(); i++)
-		ss << deq_[i] << " ";
-	ss << std::endl;
+	std::cout << "std::vector" << std::endl;
+	std::cout << "Comparisons:\t" << veccount << std::endl;
+	std::cout << "Time:\t\t" << std::fixed << std::setw(5) << std::setprecision(2) << static_cast<double>(vect) << " us" << std::endl;
 
-	ss << ssVec.str() << std::endl;
-	ss << ssDeq.str() << std::endl;
+	std::cout << "---------------------------" << std::endl;
 
-	std::cout << ss.str();
+	std::cout << "std::deque" << std::endl;
+	std::cout << "Comparisons:\t" << deqcount << std::endl;
+	std::cout << "Time:\t\t" << std::fixed << std::setw(5) << std::setprecision(2) << static_cast<double>(deqt) << " us" << std::endl;
+
+	std::cout << "===========================" << std::endl;
+
+	std::vector<ctint> vec = vec_;
+	std::sort(vec.begin(), vec.end());
+
+	bool vecok = true, deqok = true;
+	for (size_t i = 0; i < vec.size(); i++) {
+		if (vec[i] != vecsorted[i].first)
+			vecok = false;
+		if (vec[i] != deqsorted[i].first)
+			deqok = false;
+		if (!vecok && !deqok)
+			break;
+	}
+	std::cout << "std::vector:\t" << (vecok ? "OK" : "KO") << std::endl;
+	std::cout << "std::deque:\t" << (deqok ? "OK" : "KO") << std::endl;
+}
+
+/*
+Steps
+
+1
+Group elements into pairs, leave the extra one out
+
+2
+Sort the pairs so that the first element is greater
+
+3
+Sort the pairs based on its first element, recursively calling itself on it
+
+4
+Merge the second element of each pair in batches of Jacobsthal numbers.
+*/
+
+std::vector<std::pair<ctint, size_t> > PmergeMe::sortVector(std::vector<ctint> &vec) {
+	std::vector<std::pair<ctint, size_t> > indexed;
+
+	for (size_t i = 0; i < vec.size(); i++)
+		indexed.push_back(std::make_pair(vec[i], i));
+	
+	// Base case
+	if (vec.size() < 2)
+		return indexed;
+	if (vec.size() == 2) {
+		if (indexed[0].first > indexed[1].first)
+			std::iter_swap(indexed.begin(), indexed.begin() + 1);
+		return indexed;
+	}
+
+	// 1
+	size_t size = vec.size();
+	std::vector<std::pair<std::pair<ctint, size_t>, std::pair<ctint, size_t> > > pairs;
+
+	for (size_t i = 0; i < (size % 2 == 0 ? size : size - 1); i += 2)
+		pairs.push_back(std::make_pair(indexed[i], indexed[i + 1]));
+
+	// 2
+	for (size_t i = 0; i < pairs.size(); i++)
+		if (pairs[i].first.first < pairs[i].second.first)
+			std::swap(pairs[i].first, pairs[i].second);
+	
+	// 3
+	std::vector<ctint> top;
+	for (size_t i = 0; i < pairs.size(); i++)
+		top.push_back(pairs[i].first.first);
+	
+	std::vector<std::pair<ctint, size_t> > topsorted = sortVector(top);
+
+	std::vector<std::pair<std::pair<ctint, size_t>, std::pair<ctint, size_t> > > sortedpairs;
+	for (size_t i = 0; i < topsorted.size(); i++)
+		sortedpairs.push_back(pairs[topsorted[i].second]);
+
+	// 4
+	std::vector<std::pair<ctint, size_t> > chain;
+
+	chain.push_back(sortedpairs[0].second);
+	chain.push_back(sortedpairs[0].first);
+
+	size_t js, i = 0, mergeduntil = 0, pairsize = sortedpairs.size();
+	while (true) {
+		js = jacobsthal(i) * 2;
+		for (size_t j = 0; j < js; j++) {
+			if (mergeduntil + j + 1 < pairsize)
+				chain.push_back(sortedpairs[mergeduntil + j + 1].first);
+			if (mergeduntil + js - j < pairsize)
+				binaryInsertion(chain, sortedpairs[mergeduntil + js - j].second);
+		}
+		mergeduntil += js;
+		if (mergeduntil >= pairsize)
+			break;
+		i++;
+	}
+	if (size % 2 != 0)
+		binaryInsertion(chain, indexed[size - 1]);
+
+	return chain;
+}
+
+std::deque<std::pair<ctint, size_t> > PmergeMe::sortDeque(std::deque<ctint> &deq) {
+	std::deque<std::pair<ctint, size_t> > indexed;
+
+	for (size_t i = 0; i < deq.size(); i++)
+		indexed.push_back(std::make_pair(deq[i], i));
+	
+	// Base case
+	if (deq.size() < 2)
+		return indexed;
+	if (deq.size() == 2) {
+		if (indexed[0].first > indexed[1].first)
+			std::iter_swap(indexed.begin(), indexed.begin() + 1);
+		return indexed;
+	}
+
+	// 1
+	size_t size = deq.size();
+	std::deque<std::pair<std::pair<ctint, size_t>, std::pair<ctint, size_t> > > pairs;
+
+	for (size_t i = 0; i < (size % 2 == 0 ? size : size - 1); i += 2)
+		pairs.push_back(std::make_pair(indexed[i], indexed[i + 1]));
+
+	// 2
+	for (size_t i = 0; i < pairs.size(); i++)
+		if (pairs[i].first.first < pairs[i].second.first)
+			std::swap(pairs[i].first, pairs[i].second);
+	
+	// 3
+	std::deque<ctint> top;
+	for (size_t i = 0; i < pairs.size(); i++)
+		top.push_back(pairs[i].first.first);
+	
+	std::deque<std::pair<ctint, size_t> > topsorted = sortDeque(top);
+
+	std::deque<std::pair<std::pair<ctint, size_t>, std::pair<ctint, size_t> > > sortedpairs;
+	for (size_t i = 0; i < topsorted.size(); i++)
+		sortedpairs.push_back(pairs[topsorted[i].second]);
+
+	// 4
+	std::deque<std::pair<ctint, size_t> > chain;
+
+	chain.push_back(sortedpairs[0].second);
+	chain.push_back(sortedpairs[0].first);
+
+	size_t js, i = 0, mergeduntil = 0, pairsize = sortedpairs.size();
+	while (true) {
+		js = jacobsthal(i) * 2;
+		for (size_t j = 0; j < js; j++) {
+			if (mergeduntil + js - j >= pairsize)
+				continue;
+			binaryInsertion(chain, sortedpairs[mergeduntil + js - j].second);
+		}
+		for (size_t j = 0; j < js; j++) {
+			if (mergeduntil + j + 1 >= pairsize)
+				continue;
+			chain.push_back(sortedpairs[mergeduntil + j + 1].first);
+		}
+		mergeduntil += js;
+		if (mergeduntil + js >= pairsize)
+			break;
+		i++;
+	}
+	if (size % 2 != 0)
+		binaryInsertion(chain, indexed[size - 1]);
+
+	return chain;
 }

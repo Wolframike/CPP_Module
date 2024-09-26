@@ -6,12 +6,12 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:10:23 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/15 06:17:48 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/09/27 03:19:24 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PMERGE_ME_HPP
-#define PMERGE_ME_HPP
+#ifndef PMERGEME_HPP
+#define PMERGEME_HPP
 
 #include <vector>
 #include <deque>
@@ -22,27 +22,20 @@
 #include <cmath>
 #include <iomanip>
 
+#include "ctint.hpp"
+
 class PmergeMe {
 	private:
-		std::vector<int> vec_;
-		std::deque<int> deq_;
+		std::vector<ctint> vec_;
+		std::deque<ctint> deq_;
 
 		void fill(std::string &str);
-
 		size_t jacobsthal(size_t n);
-
-		template <typename ContainerType>
-		void binaryInsertion(ContainerType *container, int value);
+		template <typename PairContainer>
+		PairContainer jacobsthalOrderGen(size_t upper);
 		
-		enum Container {
-			VECTOR,
-			DEQUE
-		};
-		template <typename ContainerType, typename PairType>
-		ContainerType *mergeInsertionSort(ContainerType container);
-
-		template <typename ContainerType>
-		std::stringstream sortContainer(Container type);
+		template <typename Container, typename Element>
+		void binaryInsertion(Container& cont, const Element& el);
 		
 	public:
 		PmergeMe();
@@ -50,9 +43,12 @@ class PmergeMe {
 		PmergeMe &operator=(const PmergeMe &copy);
 		~PmergeMe();
 
-		void sort(std::string &str);
+		std::vector<std::pair<ctint, size_t> > sortVector(std::vector<ctint> &vec);
+		std::deque<std::pair<ctint, size_t> > sortDeque(std::deque<ctint> &deq);
+
+		void sort(std::string);
 };
 
-#include "PmergeMe.tpp"
+#include "Utils.tpp"
 
 #endif

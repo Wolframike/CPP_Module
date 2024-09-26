@@ -6,7 +6,7 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/29 21:03:37 by misargsy          #+#    #+#              #
-#    Updated: 2024/05/15 00:47:31 by misargsy         ###   ########.fr        #
+#    Updated: 2024/09/26 20:32:00 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ CXX			= c++
 
 NAME		= PmergeMe
 SRCS		=	main.cpp \
-				PmergeMe.cpp
+				PmergeMe.cpp \
+				ctint.cpp
+				
 OBJS		= $(SRCS:.cpp=.o)
 
 GRAY		= \033[1;37m

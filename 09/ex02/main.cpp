@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:01:44 by misargsy          #+#    #+#             */
-/*   Updated: 2024/05/15 06:27:20 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/09/27 02:04:19 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
 	try {
 		p.sort(str);
 	} catch (std::invalid_argument &e) {
-		std::cout << "Error" << std::endl;
+		std::cout << "Error: " << e.what() << std::endl;
 		return 1;
 	}
 	
