@@ -53,6 +53,10 @@ bool ctint::operator!=(const ctint &rhs) const {
 	return this->value != rhs.value;
 }
 
+void ctint::addComparison() {
+	comparisons++;
+}
+
 size_t ctint::getComparisons() {
 	return comparisons;
 }
@@ -93,3 +97,52 @@ bool operator==(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size
 bool operator!=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs) {
 	return lhs.first != rhs.first;
 }
+
+// bool operator<(const ctint &lhs, const int &rhs) {
+// 	return lhs.val() < rhs;
+// }
+
+// bool operator>(const ctint &lhs, const int &rhs) {
+// 	return lhs.val() > rhs;
+// }
+
+// bool operator<=(const ctint &lhs, const int &rhs) {
+// 	return lhs.val() <= rhs;
+// }
+
+// bool operator>=(const ctint &lhs, const int &rhs) {
+// 	return lhs.val() >= rhs;
+// }
+
+// bool operator==(const ctint &lhs, const int &rhs) {
+// 	return lhs.val() == rhs;
+// }
+
+// bool operator!=(const ctint &lhs, const int &rhs) {
+// 	return lhs.val() != rhs;
+// }
+
+bool operator<(const int &lhs, const ctint &rhs) {
+	ctint::addComparison();
+	return lhs < rhs.val();
+}
+
+// bool operator>(const int &lhs, const ctint &rhs) {
+// 	return lhs > rhs.val();
+// }
+
+// bool operator<=(const int &lhs, const ctint &rhs) {
+// 	return lhs <= rhs.val();
+// }
+
+// bool operator>=(const int &lhs, const ctint &rhs) {
+// 	return lhs >= rhs.val();
+// }
+
+// bool operator==(const int &lhs, const ctint &rhs) {
+// 	return lhs == rhs.val();
+// }
+
+// bool operator!=(const int &lhs, const ctint &rhs) {
+// 	return lhs != rhs.val();
+// }

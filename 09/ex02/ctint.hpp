@@ -21,6 +21,7 @@ class ctint { //comparisons-tracking int
 		bool operator==(const ctint &rhs) const;
 		bool operator!=(const ctint &rhs) const;
 
+		static void addComparison();
 		static size_t getComparisons();
 		static void resetComparisons();
 
@@ -34,5 +35,20 @@ bool operator<=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size
 bool operator>=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs);
 bool operator==(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs);
 bool operator!=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs);
+
+// bool operator<(const ctint &lhs, const int &rhs);
+// bool operator>(const ctint &lhs, const int &rhs);
+// bool operator<=(const ctint &lhs, const int &rhs);
+// bool operator>=(const ctint &lhs, const int &rhs);
+// bool operator==(const ctint &lhs, const int &rhs);
+// bool operator!=(const ctint &lhs, const int &rhs);
+
+// //opposite
+bool operator<(const int &lhs, const ctint &rhs);
+// bool operator>(const int &lhs, const ctint &rhs);
+// bool operator<=(const int &lhs, const ctint &rhs);
+// bool operator>=(const int &lhs, const ctint &rhs);
+// bool operator==(const int &lhs, const ctint &rhs);
+// bool operator!=(const int &lhs, const ctint &rhs);
 
 #endif

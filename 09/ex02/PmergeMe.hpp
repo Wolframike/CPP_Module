@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:10:23 by misargsy          #+#    #+#             */
-/*   Updated: 2024/09/27 03:19:24 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/09/27 07:55:14 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class PmergeMe {
 		PairContainer jacobsthalOrderGen(size_t upper);
 		
 		template <typename Container, typename Element>
-		void binaryInsertion(Container& cont, const Element& el);
+		void binaryInsertion(Container& cont, const Element& el, size_t bound);
 		
 	public:
 		PmergeMe();

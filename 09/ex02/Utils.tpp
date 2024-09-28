@@ -22,20 +22,19 @@ PairContainer PmergeMe::jacobsthalOrderGen(size_t upper) {
 }
 
 template <typename Container, typename Element>
-void PmergeMe::binaryInsertion(Container& cont, const Element& el) {
-	typename Container::iterator low = cont.begin();
-	typename Container::iterator high = cont.end();
+void PmergeMe::binaryInsertion(Container& cont, const Element& el, size_t bound) {
+	size_t start = 0;
+	size_t end = bound;
+	size_t mid;
 
-	while (low < high) {
-		typename Container::iterator mid = low + (high - low) / 2;
-
-		if (*mid < el)
-			low = mid + 1;
+	while (start < end) {
+		mid = (start + end) / 2;
+		if (cont[mid] < el)
+			start = mid + 1;
 		else
-			high = mid;
+			end = mid;
 	}
-
-	cont.insert(low, el);
+	cont.insert(cont.begin() + start, el);
 }
 
 
