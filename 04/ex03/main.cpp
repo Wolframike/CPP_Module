@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 20:49:20 by misargsy          #+#    #+#             */
-/*   Updated: 2024/09/22 20:51:43 by misargsy         ###   ########.fr       */
+/*   Created: 2024/05/04 04:05:07 by misargsy          #+#    #+#             */
+/*   Updated: 2024/09/28 21:05:07 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,27 @@ int main() {
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
 	
-	ICharacter* me = new Character("me");
+	Character* me = new Character("me");
 	
-	me->equip(src->createMateria("ice"));
-	me->equip(src->createMateria("cure"));
+	AMateria* tmp;
+	tmp = src->createMateria("ice");
+	me->equip(tmp);
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
 
-	ICharacter* bob = new Character("bob");
+	Character* bob = new Character("bob");
 	
 	me->use(0, *bob);
 	me->use(1, *bob);
 
 	//overflow materia slot
-	me->equip(src->createMateria("ice"));
-	me->equip(src->createMateria("cure"));
+	tmp = src->createMateria("ice");
+	me->equip(tmp);
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
 
-	
-	AMateria *tmp = src->createMateria("ice");
 	try {
+		tmp = src->createMateria("ice");
 		me->equip(tmp);
 	} catch (std::exception &e) {
 		delete tmp;

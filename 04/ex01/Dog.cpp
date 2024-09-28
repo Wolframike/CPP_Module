@@ -6,13 +6,13 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 23:40:09 by misargsy          #+#    #+#             */
-/*   Updated: 2024/06/02 16:29:55 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/08/25 10:05:34 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Dog.hpp"
 
-Dog::Dog(void) : Animal("Dog")
+Dog::Dog(void) : Animal("Dog"), brain(new Brain())
 {
 	std::cout << "Dog constructor called" << std::endl;
 }
@@ -25,17 +25,17 @@ Dog::Dog(Dog const & src)
 
 Dog&	Dog::operator=(Dog const &src)
 {
-	if (this == &src)
-		return *this;
-	Animal::operator=(src);
-	delete brain_;
-	brain_ = new Brain(*src.brain_);
+	if (this != &src)
+		Animal::operator=(src);
+	delete brain;
+	brain = new Brain(*src.brain);
 	std::cout << "Dog assignation operator called" << std::endl;
 	return *this;
 }
 
 Dog::~Dog(void)
 {
+	delete brain;
 	std::cout << "Dog destructor called" << std::endl;
 }
 

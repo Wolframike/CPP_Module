@@ -6,7 +6,7 @@
 #    By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 22:41:18 by misargsy          #+#    #+#              #
-#    Updated: 2024/05/04 02:34:41 by misargsy         ###   ########.fr        #
+#    Updated: 2024/05/10 18:48:14 by misargsy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,4 +53,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re

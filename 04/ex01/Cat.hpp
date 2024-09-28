@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 23:36:36 by misargsy          #+#    #+#             */
-/*   Updated: 2024/06/02 16:28:03 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/08/25 10:01:26 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 class Cat : public Animal
 {
 	private:
-		Brain*	brain_;
-	
+		Brain* brain;
 	public:
 		Cat(void);
 		Cat(Cat const & src);

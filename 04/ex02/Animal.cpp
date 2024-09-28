@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 23:39:01 by misargsy          #+#    #+#             */
-/*   Updated: 2024/02/02 05:51:52 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:04:00 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,4 @@ std::string	Animal::getType() const
 void		Animal::setType(std::string type)
 {
 	this->type = type;
-}
-
-void		Animal::makeSound(void) const
-{
-	std::cout << "Animal sound" << std::endl;
 }

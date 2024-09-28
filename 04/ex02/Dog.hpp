@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 23:37:50 by misargsy          #+#    #+#             */
-/*   Updated: 2024/02/08 23:50:05 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/08/25 10:01:46 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 # define DOG_HPP
 
 # include "Animal.hpp"
+# include "Brain.hpp"
 
 class Dog : public Animal
 {
+	private:
+		Brain* brain;
 	public:
 		Dog(void);
 		Dog(Dog const & src);
