@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:54:07 by misargsy          #+#    #+#             */
-/*   Updated: 2024/09/28 19:47:43 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/09/28 21:28:03 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void PmergeMe::sort(std::string str) {
 		if (!vecok && !deqok)
 			break;
 	}
-	std::cout << "Sorted: " << std::endl;//print vec
+	std::cout << "Sorted: " << std::endl;
 	for (size_t i = 0; i < vec.size(); i++)
 		std::cout << vec[i] << " ";
 	std::cout << std::endl;
@@ -119,24 +119,36 @@ void PmergeMe::sort(std::string str) {
 	std::cout << std::endl;
 }
 
+// static void printMISChain(std::vector<MISChainLink> &chain) {
+// 	for (size_t i = 0; i < chain.size(); i++)
+// 		std::cout << std::setw(3) << chain[i].first.first << " ";
+// 	std::cout << std::endl;
+
+// 	for (size_t i = 0; i < chain.size(); i++)
+// 		std::cout << std::setw(3) << chain[i].second.first << " ";
+// 	std::cout << std::endl;
+// }
+
 /*
 Steps
 
 1
-Group elements into pairs, leave the extra one out
+Group elements into pairs, leave the extra one out.
 
 2
-Sort the pairs so that the first element is greater
+Sort the pairs so that the first element is greater.
 
 3
-Sort the pairs based on its first element, recursively calling itself on it
+Sort the pairs based on its first element, recursively using merge-insertion sort.
 
 4
 Merge the second element of each pair in batches of Jacobsthal numbers.
+Merge elements in the batch in reverse order using binary search.
 */
 std::vector<indexedctint> PmergeMe::sortVector(std::vector<ctint> &vec) {
 	std::vector<indexedctint> indexed;
 
+	// Index the elements
 	for (size_t i = 0; i < vec.size(); i++)
 		indexed.push_back(std::make_pair(vec[i], i));
 	
@@ -153,63 +165,79 @@ std::vector<indexedctint> PmergeMe::sortVector(std::vector<ctint> &vec) {
 	size_t size = vec.size();
 	std::vector<MISChainLink> pairs;
 
+	// Group elements into pairs and create a chain
 	for (size_t i = 0; i < (size % 2 == 0 ? size : size - 1); i += 2)
 		pairs.push_back(std::make_pair(indexed[i], indexed[i + 1]));
-
 	// 2
+
+	// Sort the pairs so that the first element is greater
 	for (size_t i = 0; i < pairs.size(); i++)
 		if (pairs[i].first.first < pairs[i].second.first)
 			std::swap(pairs[i].first, pairs[i].second);
 	
 	// 3
+
+	// Create a container with elements on top of the chain
 	std::vector<ctint> top;
 	for (size_t i = 0; i < pairs.size(); i++)
 		top.push_back(pairs[i].first.first);
 	
+	// Sort it
 	std::vector<indexedctint> topsorted = sortVector(top);
 
+	// Reconstruct the chain so that it is sorted with element on top of the chain as the key
 	std::vector<MISChainLink> chain;
 	for (size_t i = 0; i < topsorted.size(); i++)
 		chain.push_back(pairs[topsorted[i].second]);
 
 	// 4
+
+	// Prepare a dummy to fill gaps in the chain
 	indexedctint dummy = std::make_pair(static_cast<ctint>(-1LL), -1);
 
+	// The bottom element of the first link do not have to be binary-searched of its position
 	chain.insert(chain.begin(), std::make_pair(chain[0].second, dummy));
 	chain[1].second = dummy;
 	
-	size_t js, iterations = 0, mergeduntil = 1, count, index, displacement;
+	/*
+	js: Jacobsthal number
+	iterations: Number of batch iterations
+	mergeduntil: Up until what index the top of the chain has been merged
+	index: Index of the element to be merged
+	displacement: Number of displacement caused during the merge
+	*/
+	size_t js, iterations = 0, mergeduntil = 1, index, displacement;
 
+	// printMISChain(chain);
 	while (mergeduntil < chain.size()) {
-		js = jacobsthal(iterations) * 2;
-		count = 0;
+		js = jacobsthal(iterations) * 2; // Merge in batches of Jacobsthal numbers
 		displacement = 0;
-		if (mergeduntil + js >= chain.size() && size % 2 != 0) {
-			binaryInsertion(chain, std::make_pair(indexed[size - 1], dummy), chain.size());
-			mergeduntil++;
-			count++;
+		if (mergeduntil + js >= chain.size() && size % 2 != 0) { // If this is the last batch and there is an extra element
+			binaryInsertion(chain, std::make_pair(indexed[size - 1], dummy), chain.size()); // Insert the extra element
+			mergeduntil++; // Merged until one further
 		}
 		for (ssize_t i = 0; i < static_cast<ssize_t>(js); i++) {
-			index = mergeduntil + js - displacement - i;
-			if (index < chain.size()) {
-				if (chain[index].second.second == -1) {
-					displacement++;
-					i--;
+			index = mergeduntil + js - displacement - i; // Rightmost index of the batch(mergeduntil + js) - Skipped dummy elements(displacement) - Number of elements already merged(i)
+			if (index < chain.size()) { // If the index is within the chain
+				if (chain[index].second.second == -1) { // If the element is a dummy
+					displacement++; // Displacement is caused by dummy elements
+					i--; // Must not increment as no element is merged
 					continue;
 				}
-				binaryInsertion(chain, std::make_pair(chain[index].second, dummy), index);
-				chain[index + 1].second = dummy;
-				mergeduntil++;
-				count++;
+				binaryInsertion(chain, std::make_pair(chain[index].second, dummy), index); // Insert the element
+				chain[index + 1].second = dummy; // Overwrite the merged element with a dummy
+				mergeduntil++; // Merged until one further
 			}
 		}
-		mergeduntil += js;
-		iterations++;
+		mergeduntil += js; // Merged until the end of the batch
+		iterations++; // One iteration done
 	}
+	// printMISChain(chain);
+	// std::cout << "========================" << std::endl;
 
-	std::vector<indexedctint> sorted;
+	std::vector<indexedctint> sorted; // Final sorted container
 	for (size_t i = 0; i < chain.size(); i++)
-		sorted.push_back(chain[i].first);
+		sorted.push_back(chain[i].first); // Push the top of the chain
 	
 	return sorted;
 }
@@ -258,16 +286,14 @@ std::deque<indexedctint> PmergeMe::sortDeque(std::deque<ctint> &deq) {
 	chain.insert(chain.begin(), std::make_pair(chain[0].second, dummy));
 	chain[1].second = dummy;
 	
-	size_t js, iterations = 0, mergeduntil = 1, count, index, displacement;
+	size_t js, iterations = 0, mergeduntil = 1, index, displacement;
 
 	while (mergeduntil < chain.size()) {
 		js = jacobsthal(iterations) * 2;
-		count = 0;
 		displacement = 0;
 		if (mergeduntil + js >= chain.size() && size % 2 != 0) {
 			binaryInsertion(chain, std::make_pair(indexed[size - 1], dummy), chain.size());
 			mergeduntil++;
-			count++;
 		}
 		for (ssize_t i = 0; i < static_cast<ssize_t>(js); i++) {
 			index = mergeduntil + js - displacement - i;
@@ -280,7 +306,6 @@ std::deque<indexedctint> PmergeMe::sortDeque(std::deque<ctint> &deq) {
 				binaryInsertion(chain, std::make_pair(chain[index].second, dummy), index);
 				chain[index + 1].second = dummy;
 				mergeduntil++;
-				count++;
 			}
 		}
 		mergeduntil += js;

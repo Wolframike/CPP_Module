@@ -11,7 +11,6 @@ class ctint { //comparisons-tracking int
 	public:
 		ctint();
 		ctint(int value);
-		ctint(ctint &copy);
 		ctint(const ctint &copy);
 		ctint(const long long &copy);
 		ctint &operator=(const ctint &copy);

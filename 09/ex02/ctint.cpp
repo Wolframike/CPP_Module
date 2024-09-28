@@ -2,13 +2,9 @@
 
 size_t ctint::comparisons = 0;
 
-ctint::ctint() : value(0) {}
+ctint::ctint() {}
 
 ctint::ctint(int value) : value(value) {}
-
-ctint::ctint(ctint &copy) {
-	*this = copy;
-}
 
 ctint::ctint(const ctint &copy) {
 	*this = copy;
