@@ -6,7 +6,7 @@
 /*   By: misargsy <misargsy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 14:10:23 by misargsy          #+#    #+#             */
-/*   Updated: 2024/09/27 07:55:14 by misargsy         ###   ########.fr       */
+/*   Updated: 2024/09/28 19:46:31 by misargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 
 #include "ctint.hpp"
 
+typedef std::pair<ctint, ssize_t> indexedctint;
+typedef std::pair<indexedctint, indexedctint> MISChainLink;
+
 class PmergeMe {
 	private:
 		std::vector<ctint> vec_;
@@ -34,8 +37,8 @@ class PmergeMe {
 		template <typename PairContainer>
 		PairContainer jacobsthalOrderGen(size_t upper);
 		
-		template <typename Container, typename Element>
-		void binaryInsertion(Container& cont, const Element& el, size_t bound);
+		template <typename Container>
+		void binaryInsertion(Container& cont, const std::pair<indexedctint, indexedctint>& el, size_t bound);
 		
 	public:
 		PmergeMe();
@@ -43,8 +46,8 @@ class PmergeMe {
 		PmergeMe &operator=(const PmergeMe &copy);
 		~PmergeMe();
 
-		std::vector<std::pair<ctint, size_t> > sortVector(std::vector<ctint> &vec);
-		std::deque<std::pair<ctint, size_t> > sortDeque(std::deque<ctint> &deq);
+		std::vector<indexedctint> sortVector(std::vector<ctint> &vec);
+		std::deque<indexedctint> sortDeque(std::deque<ctint> &deq);
 
 		void sort(std::string);
 };

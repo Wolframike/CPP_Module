@@ -9,8 +9,11 @@ class ctint { //comparisons-tracking int
 		int value;
 
 	public:
+		ctint();
 		ctint(int value);
+		ctint(ctint &copy);
 		ctint(const ctint &copy);
+		ctint(const long long &copy);
 		ctint &operator=(const ctint &copy);
 		~ctint();
 
@@ -29,26 +32,5 @@ class ctint { //comparisons-tracking int
 };
 
 std::ostream &operator<<(std::ostream &os, const ctint &rhs);
-bool operator<(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs);
-bool operator>(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs);
-bool operator<=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs);
-bool operator>=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs);
-bool operator==(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs);
-bool operator!=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs);
-
-// bool operator<(const ctint &lhs, const int &rhs);
-// bool operator>(const ctint &lhs, const int &rhs);
-// bool operator<=(const ctint &lhs, const int &rhs);
-// bool operator>=(const ctint &lhs, const int &rhs);
-// bool operator==(const ctint &lhs, const int &rhs);
-// bool operator!=(const ctint &lhs, const int &rhs);
-
-// //opposite
-bool operator<(const int &lhs, const ctint &rhs);
-// bool operator>(const int &lhs, const ctint &rhs);
-// bool operator<=(const int &lhs, const ctint &rhs);
-// bool operator>=(const int &lhs, const ctint &rhs);
-// bool operator==(const int &lhs, const ctint &rhs);
-// bool operator!=(const int &lhs, const ctint &rhs);
 
 #endif

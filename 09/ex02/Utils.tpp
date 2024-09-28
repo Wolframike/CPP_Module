@@ -21,15 +21,15 @@ PairContainer PmergeMe::jacobsthalOrderGen(size_t upper) {
 	return order;
 }
 
-template <typename Container, typename Element>
-void PmergeMe::binaryInsertion(Container& cont, const Element& el, size_t bound) {
+template <typename Container>
+void PmergeMe::binaryInsertion(Container& cont, const std::pair<indexedctint, indexedctint>& el, size_t bound) {
 	size_t start = 0;
 	size_t end = bound;
 	size_t mid;
 
 	while (start < end) {
 		mid = (start + end) / 2;
-		if (cont[mid] < el)
+		if (cont[mid].first.first < el.first.first)
 			start = mid + 1;
 		else
 			end = mid;

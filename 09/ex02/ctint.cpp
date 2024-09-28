@@ -2,16 +2,27 @@
 
 size_t ctint::comparisons = 0;
 
+ctint::ctint() : value(0) {}
+
 ctint::ctint(int value) : value(value) {}
+
+ctint::ctint(ctint &copy) {
+	*this = copy;
+}
 
 ctint::ctint(const ctint &copy) {
 	*this = copy;
 }
 
+ctint::ctint(const long long &value) {
+	if (value > INT_MAX || value < INT_MIN)
+		throw std::out_of_range("Value is out of range for int");
+	this->value = static_cast<int>(value);
+}
+
 ctint &ctint::operator=(const ctint &copy) {
-	if (this != &copy) {
+	if (this != &copy)
 		this->value = copy.value;
-	}
 	return *this;
 }
 
@@ -73,76 +84,3 @@ std::ostream &operator<<(std::ostream &os, const ctint &rhs) {
 	os << rhs.val();
 	return os;
 }
-
-bool operator<(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs) {
-	return lhs.first < rhs.first;
-}
-
-bool operator>(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs) {
-	return lhs.first > rhs.first;
-}
-
-bool operator<=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs) {
-	return lhs.first <= rhs.first;
-}
-
-bool operator>=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs) {
-	return lhs.first >= rhs.first;
-}
-
-bool operator==(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs) {
-	return lhs.first == rhs.first;
-}
-
-bool operator!=(const std::pair<ctint, size_t>& lhs, const std::pair<ctint, size_t>& rhs) {
-	return lhs.first != rhs.first;
-}
-
-// bool operator<(const ctint &lhs, const int &rhs) {
-// 	return lhs.val() < rhs;
-// }
-
-// bool operator>(const ctint &lhs, const int &rhs) {
-// 	return lhs.val() > rhs;
-// }
-
-// bool operator<=(const ctint &lhs, const int &rhs) {
-// 	return lhs.val() <= rhs;
-// }
-
-// bool operator>=(const ctint &lhs, const int &rhs) {
-// 	return lhs.val() >= rhs;
-// }
-
-// bool operator==(const ctint &lhs, const int &rhs) {
-// 	return lhs.val() == rhs;
-// }
-
-// bool operator!=(const ctint &lhs, const int &rhs) {
-// 	return lhs.val() != rhs;
-// }
-
-bool operator<(const int &lhs, const ctint &rhs) {
-	ctint::addComparison();
-	return lhs < rhs.val();
-}
-
-// bool operator>(const int &lhs, const ctint &rhs) {
-// 	return lhs > rhs.val();
-// }
-
-// bool operator<=(const int &lhs, const ctint &rhs) {
-// 	return lhs <= rhs.val();
-// }
-
-// bool operator>=(const int &lhs, const ctint &rhs) {
-// 	return lhs >= rhs.val();
-// }
-
-// bool operator==(const int &lhs, const ctint &rhs) {
-// 	return lhs == rhs.val();
-// }
-
-// bool operator!=(const int &lhs, const ctint &rhs) {
-// 	return lhs != rhs.val();
-// }
