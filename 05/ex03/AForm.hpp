@@ -14,6 +14,8 @@
 # define AFORM_HPP
 
 #include "Bureaucrat.hpp"
+#include <cstdlib>
+#include <ctime>
 
 class Bureaucrat;
 
